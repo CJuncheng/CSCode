@@ -1,0 +1,76 @@
+//tasks.json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",  //在launch.json文件中会用到
+            "type": "shell",
+            "command": "make",
+           // "command": "g++", //使用makefile 代替这个任务
+           /* "args": [
+                "-g",
+                "-std=c++11",
+                "${file}",
+                "-o",
+                "${workspaceFolder}\\Output\\bin\\main.exe",
+                "-g", //生成和调试有关的信息
+                "-Wall", // 开启额外警告
+                "-I","D:/Software/OpenCV/mingw_buid/install/include",
+                "-I","D:/Software/OpenCV/mingw_buid/install/include/opencv",  
+                "-I","D:/Software/OpenCV/mingw_buid/install/include/opencv2",
+                "-L","D:/Software/OpenCV/mingw_buid/install/x64/mingw/lib",
+                "-l", "opencv_core3415",
+                "-l", "opencv_imgproc3415",
+                "-l", "opencv_imgcodecs3415",
+                "-l", "opencv_video3415",
+                "-l", "opencv_ml3415",
+                "-l", "opencv_highgui3415",
+                "-l", "opencv_objdetect3415",
+                "-l", "opencv_flann3415",
+                "-l", "opencv_imgcodecs3415",
+                "-l", "opencv_photo3415",
+                "-l", "opencv_videoio3415"
+            ],
+            "options": {
+                "cwd": "D:\\Software\\MinGW64\\bin"
+            },*/
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher":{
+                "owner":"cpp",
+                "fileLocation": [
+                    "relative",
+                     "${workspaceRoot}"
+                     ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                } 
+            }
+        },
+        { //这个大括号里是‘运行(run)’任务，一些设置与上面的构建任务性质相同
+            "label": "run",
+            "type": "shell",
+            "dependsOn": "build", //任务依赖，因为要运行必须先构建，所以执行这个任务前必须先执行build任务，
+            "command": "${workspaceFolder}/out/bin/main", //执行exe文件，只需要指定这个exe文件在哪里就好
+            "group": {
+                "kind": "test", //这一组是‘测试’组，将run任务放在test组里方便我们用快捷键执行
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true, //这个就设置为true了，运行任务后将焦点聚集到终端，方便进行输入
+                "panel": "new"
+            }
+        }
+    ]
+}
